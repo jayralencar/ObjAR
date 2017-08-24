@@ -60,6 +60,7 @@
 #  include <windows.h>
 #endif
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdlib.h>					// malloc(), free()
 #include <string.h>
 #ifdef _WIN32
@@ -150,21 +151,62 @@ static void printMode();
 //	Functions
 // ============================================================================
 
+void marcador()
+{
+	int msgboxID = MessageBox(
+		NULL,
+		"Você deseja cadastrar um marcador?",
+		"Novo marcador?",
+		MB_ICONEXCLAMATION | MB_YESNO
+		);
+	
+
+	if (msgboxID == IDYES)
+	{
+			
+	}
+	else{
+
+	}
+
+}
+
 int main(int argc, char** argv)
 {
+	char	*markersENV = getenv("USERPROFILE");
+	char	*objectsENV = getenv("USERPROFILE");
 	char    glutGamemode[32] = "";
 	char   *vconf = NULL;
-	char    cparaDefault[] = "Data/camera_para.dat";
+	char    cparaDefault[] =  "Data/camera_para.dat";
 	char   *cpara = NULL;
 	int     i;
 	int     gotTwoPartOption;
-	const char markerConfigDataFilename[] = "Data/markers.dat";
-	const char objectDataFilename[] = "Data/objects.dat";
+	 //char markerConfigDataFilename[] = "/Documents/ObjAR/Data/markers.dat";
+	 //char objectDataFilename[] = "/Documents/ObjAR/Data/objects.dat";
+	 char* markerConfigDataFilename = 0;
+	 char* objectDataFilename = 0;
 
+	 const char* dataPath = getenv("USERPROFILE");
+	 char* fullPath = 0;
+	 if (dataPath)
+	 {
+		 /* 6 for "/index" and 1 for terminating null character. */
+		 markerConfigDataFilename = malloc(strlen(dataPath) + 33 + 1);
+		 if (markerConfigDataFilename)
+		 {
+			 sprintf(markerConfigDataFilename, "%s/Documents/ObjAR/Data/markers.dat", dataPath);
+		 }
+
+		 objectDataFilename = malloc(strlen(dataPath) + 33 + 1);
+		 if (objectDataFilename)
+		 {
+			 sprintf(objectDataFilename, "%s/Documents/ObjAR/Data/objects.dat", dataPath);
+		 }
+	 }
+	 
 	//
 	// Process command-line options.
 	//
-
 	glutInit(&argc, argv);
 
 	i = 1; // argv[0] is name of app, so start at 1.
@@ -234,6 +276,8 @@ int main(int argc, char** argv)
 	}
 
 
+
+
 	//
 	// Video setup.
 	//
@@ -278,6 +322,7 @@ int main(int argc, char** argv)
 
 	// Load marker(s).
 	newMarkers(markerConfigDataFilename, gARPattHandle, &markersSquare, &markersSquareCount, &gARPattDetectionMode);
+
 	ARLOGi("Marker count = %d\n", markersSquareCount);
 
 	//
