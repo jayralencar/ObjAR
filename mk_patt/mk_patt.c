@@ -343,8 +343,25 @@ static void mouseEvent(int button, int state, int x, int y)
 		printf("Enter filename: ");
 		if (fgets(name1, 256, stdin) == NULL) return;
 		if (sscanf(name1, "%s", name2) != 1) return;
+
+		const char* dataPath = getenv("USERPROFILE");
+		strcat(dataPath, "/Documents/ObjAR/Data");
+
+		char* fullPath = 0;
+
+		if (dataPath)
+		{
+			/* 6 for "/index" and 1 for terminating null character. */
+			fullPath = malloc(strlen(dataPath) + strlen(name2) + 1);
+			if (fullPath)
+			{	
+				sprintf(fullPath, "%s/%s", dataPath, name2);
+			}
+		}
+
+
 		if (arPattSave(image, cparam.xsize, cparam.ysize, pixelFormat, &(cparamLT->paramLTf),
-			arHandle->arImageProcMode, target, pattRatio, gPattSize, name2) < 0) {
+			arHandle->arImageProcMode, target, pattRatio, gPattSize, fullPath) < 0) {
 			ARLOGe("ERROR!!\n");
 		}
 		else {
