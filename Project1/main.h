@@ -12,6 +12,9 @@ namespace Project1 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::IO;
+	using namespace System::Runtime::InteropServices;
+	
 	
 
 	/// <summary>
@@ -147,9 +150,13 @@ namespace Project1 {
 			System::IO::StreamReader ^ sr = gcnew
 				System::IO::StreamReader(openFileDialog1->FileName);
 			//if (sr->GetType)
-			System::String^ comando = "osgconvd " + openFileDialog1->FileName + "";
-			//WinExec("osgconv "+openFileDialog1->FileName, 1);
-			//MessageBox::Show(sr->ReadToEnd());
+			System::String^ name = Path::GetFileNameWithoutExtension(openFileDialog1->FileName);
+			
+			System::String^ comando = "osgconvd \"" + openFileDialog1->FileName + "\" \"" + Environment::GetEnvironmentVariable("userprofile")+"/Documents/ObjAR/OSG/"+name+".osg\" && exit > output.msg 2> output.err";
+			IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
+			char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
+			system(nativeString);
+			//MessageBox::Show(comando);
 			sr->Close();
 		}
 	}
