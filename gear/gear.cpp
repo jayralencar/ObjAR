@@ -29,9 +29,15 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	MSG msg;
 	HACCEL hAccelTable;
 
+
+
+	
+
 	// Initialize global strings
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_GEAR, szWindowClass, MAX_LOADSTRING);
+	
+	
 	MyRegisterClass(hInstance);
 
 	// Perform application initialization:
@@ -41,6 +47,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GEAR));
+
 
 	// Main message loop:
 	while (GetMessage(&msg, NULL, 0, 0))
@@ -102,6 +109,22 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
+   HWND MarcadorBotao = CreateWindow(
+	   L"BUTTON",  // Predefined class; Unicode assumed 
+	   L"Pegar novo marcador",      // Button text 
+	   WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,  // Styles 
+	   10,         // x position 
+	   10,         // y position 
+	   200,        // Button width
+	   50,        // Button height
+	   hWnd,     // Parent window
+	   NULL,       // No menu.
+	   (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE),
+	   NULL);      // Pointer not needed.
+
+   
+   
+
    if (!hWnd)
    {
       return FALSE;
@@ -137,6 +160,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Parse the menu selections:
 		switch (wmId)
 		{
+		
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
