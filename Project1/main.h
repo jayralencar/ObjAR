@@ -45,9 +45,11 @@ namespace Project1 {
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
-	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::Label^  label2;
+
+
 	private: System::Windows::Forms::Button^  button3;
+	private: System::Windows::Forms::DataGridView^  dataGridView1;
+	private: System::Windows::Forms::DataGridView^  dataGridView2;
 	protected:
 
 	private:
@@ -66,9 +68,11 @@ namespace Project1 {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -83,7 +87,7 @@ namespace Project1 {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(206, 25);
+			this->button2->Location = System::Drawing::Point(301, 25);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(165, 36);
 			this->button2->TabIndex = 1;
@@ -96,53 +100,57 @@ namespace Project1 {
 			this->openFileDialog1->DefaultExt = L"obj,3ds,osg";
 			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(203, 64);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(35, 13);
-			this->label1->TabIndex = 2;
-			this->label1->Text = L"label1";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(21, 64);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(35, 13);
-			this->label2->TabIndex = 3;
-			this->label2->Text = L"label2";
-			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(393, 25);
+			this->button3->Location = System::Drawing::Point(408, 234);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(165, 36);
 			this->button3->TabIndex = 4;
 			this->button3->Text = L"Iniciar Aplicação";
 			this->button3->UseVisualStyleBackColor = true;
 			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Location = System::Drawing::Point(21, 67);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(272, 150);
+			this->dataGridView1->TabIndex = 5;
+			// 
+			// dataGridView2
+			// 
+			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView2->Location = System::Drawing::Point(301, 67);
+			this->dataGridView2->Name = L"dataGridView2";
+			this->dataGridView2->Size = System::Drawing::Size(272, 150);
+			this->dataGridView2->TabIndex = 6;
+			
+			// 
 			// main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(583, 327);
+			this->ClientSize = System::Drawing::Size(595, 282);
+			this->Controls->Add(this->dataGridView2);
+			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->button3);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Name = L"main";
 			this->Text = L"GearAPP - Versão 0.0.1 - Prof. Jayr Alencar";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
-			this->PerformLayout();
+
+			
 
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		
+		this->getMarcadores();
 		system("mk_patt -cpara=\"Data/camera_para.dat\"");
+		
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
@@ -155,10 +163,35 @@ namespace Project1 {
 			System::String^ comando = "osgconvd \"" + openFileDialog1->FileName + "\" \"" + Environment::GetEnvironmentVariable("userprofile")+"/Documents/ObjAR/OSG/"+name+".osg\" && exit > output.msg 2> output.err";
 			IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
 			char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-			system(nativeString);
-			//MessageBox::Show(comando);
+			system(nativeString);		//MessageBox::Show(comando);
 			sr->Close();
 		}
+	}
+
+	private: void getMarcadores(){
+		StreamReader^ sr = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile")+"/Documents/ObjAR/Data/markers.dat");
+		String^ line;
+
+		while ((line = sr->ReadLine()) != nullptr)
+		{
+			if (line->Length > 0 && line != ""){
+				if (line->Substring(0, 1) != "#"){
+					int numMarkres = Int32::Parse(line);
+					for (int i = 0; i < numMarkres; i++){
+						String^ line2;
+						while ((line2 = sr->ReadLine()) != nullptr ){
+							if (line2 != ""){
+								if (line2->Substring(0, 1) != "#"){
+									MessageBox::Show(line2);
+								}	
+							}					
+						}
+						
+					}
+				}
+			}
+		}
+		sr->Close();
 	}
 	};
 }
