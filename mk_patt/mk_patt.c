@@ -91,6 +91,7 @@ static ARGViewportHandle  *vp1;
 static int                 debugMode = AR_DEBUG_DISABLE;
 static ARdouble            pattRatio = (ARdouble)(AR_PATT_RATIO);
 static int                 gPattSize = AR_PATT_SIZE1;
+static char				   *filename;
 
 
 
@@ -135,6 +136,7 @@ static void usage(char *com)
 	ARLOG("             Default value 16 (required for compatibility with ARToolKit prior\n");
 	ARLOG("             to version 5.2). Range is [16, %d] (inclusive).\n", AR_PATT_SIZE1_MAX);
 	ARLOG("  -h -help --help: show this message\n");
+	ARLOG("  -o -output --output: Filename output marker\n");
 	exit(0);
 }
 
@@ -184,6 +186,11 @@ static void init(int argc, char *argv[])
 				i++;
 				if (sscanf(argv[i], "%f", &tempF) == 1 && tempF > 0.0f && tempF < 0.5f) pattRatio = (ARdouble)(1.0f - 2.0f*tempF);
 				else ARLOGe("Error: argument '%s' to --borderSize invalid.\n", argv[i]);
+				gotTwoPartOption = TRUE;
+			}
+			else if (strcmp(argv[i], "--output") == 0){
+				i++;
+				filename = argv[i];
 				gotTwoPartOption = TRUE;
 			}
 		}
@@ -334,15 +341,25 @@ static void   keyEvent(unsigned char key, int x, int y)
 static void mouseEvent(int button, int state, int x, int y)
 {
 	char   name1[256], name2[256];
+	char *name;
 
 	if (button == GLUT_RIGHT_BUTTON  && state == GLUT_DOWN) {
 		cleanup();
 		exit(0);
 	}
 	if (button == GLUT_LEFT_BUTTON  && state == GLUT_DOWN && target != NULL) {
-		printf("Enter filename: ");
-		if (fgets(name1, 256, stdin) == NULL) return;
-		if (sscanf(name1, "%s", name2) != 1) return;
+		if (filename == NULL){
+			printf("Enter filename: ");
+			if (fgets(name1, 256, stdin) == NULL) return;
+			if (sscanf(name1, "%s", name2) != 1) return;
+			name = name2;
+		}
+		else{
+			name = filename;
+		}
+
+		
+		
 
 		const char* dataPath = getenv("USERPROFILE");
 		strcat(dataPath, "/Documents/ObjAR/Data");
@@ -352,10 +369,10 @@ static void mouseEvent(int button, int state, int x, int y)
 		if (dataPath)
 		{
 			/* 6 for "/index" and 1 for terminating null character. */
-			fullPath = malloc(strlen(dataPath) + strlen(name2) + 1);
+			fullPath = malloc(strlen(dataPath) + strlen(name) + 1);
 			if (fullPath)
 			{	
-				sprintf(fullPath, "%s/%s", dataPath, name2);
+				sprintf(fullPath, "%s/%s", dataPath, name);
 			}
 		}
 
@@ -366,6 +383,17 @@ static void mouseEvent(int button, int state, int x, int y)
 		}
 		else {
 			ARLOG("  Saved\n");
+			int msgboxID = MessageBox(
+				NULL,
+				"Salvo com sucesso",
+				"Salvo com sucesso",
+				MB_ICONEXCLAMATION | MB_OK
+			);
+
+			
+				cleanup();
+				exit(0);
+			
 		}
 	}
 }
