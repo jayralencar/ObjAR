@@ -3,6 +3,7 @@
 #include <string> 
 #include <iostream>
 #include <windows.h>
+#using <Microsoft.VisualBasic.dll>
 
 namespace Project1 {
 
@@ -91,6 +92,8 @@ namespace Project1 {
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->resObjcet = (gcnew System::Windows::Forms::Label());
+			this->resMarcador = (gcnew System::Windows::Forms::Label());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
@@ -99,8 +102,6 @@ namespace Project1 {
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
-			this->resMarcador = (gcnew System::Windows::Forms::Label());
-			this->resObjcet = (gcnew System::Windows::Forms::Label());
 			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
 			this->panel3->SuspendLayout();
@@ -139,6 +140,22 @@ namespace Project1 {
 			this->panel1->Size = System::Drawing::Size(693, 76);
 			this->panel1->TabIndex = 11;
 			// 
+			// resObjcet
+			// 
+			this->resObjcet->AutoSize = true;
+			this->resObjcet->Location = System::Drawing::Point(343, 56);
+			this->resObjcet->Name = L"resObjcet";
+			this->resObjcet->Size = System::Drawing::Size(0, 13);
+			this->resObjcet->TabIndex = 5;
+			// 
+			// resMarcador
+			// 
+			this->resMarcador->AutoSize = true;
+			this->resMarcador->Location = System::Drawing::Point(13, 57);
+			this->resMarcador->Name = L"resMarcador";
+			this->resMarcador->Size = System::Drawing::Size(0, 13);
+			this->resMarcador->TabIndex = 4;
+			// 
 			// button2
 			// 
 			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
@@ -158,6 +175,7 @@ namespace Project1 {
 			this->button1->TabIndex = 2;
 			this->button1->Text = L"Criar novo marcador";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &main::button1_Click);
 			// 
 			// panel2
 			// 
@@ -213,22 +231,6 @@ namespace Project1 {
 			this->richTextBox2->TabIndex = 9;
 			this->richTextBox2->Text = L"";
 			// 
-			// resMarcador
-			// 
-			this->resMarcador->AutoSize = true;
-			this->resMarcador->Location = System::Drawing::Point(13, 57);
-			this->resMarcador->Name = L"resMarcador";
-			this->resMarcador->Size = System::Drawing::Size(0, 13);
-			this->resMarcador->TabIndex = 4;
-			// 
-			// resObjcet
-			// 
-			this->resObjcet->AutoSize = true;
-			this->resObjcet->Location = System::Drawing::Point(343, 56);
-			this->resObjcet->Name = L"resObjcet";
-			this->resObjcet->Size = System::Drawing::Size(0, 13);
-			this->resObjcet->TabIndex = 5;
-			// 
 			// main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -252,8 +254,13 @@ namespace Project1 {
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		
-		
-		system("mk_patt -cpara=\"Data/camera_para.dat\"");
+		System::String^ arquivo = Microsoft::VisualBasic::Interaction::InputBox(L"Nome do arquivo. Com .patt no final", L"Novo Marcador", L"file.patt", 500, 100);
+		System::String^ comando = "mk_patt -cpara=\"Data/camera_para.dat\" --output " + arquivo;
+		MessageBox::Show(comando);
+		IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
+		char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
+		system(nativeString);		
+		resMarcador->Text = "Salvo como Data/" + arquivo;
 		
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -291,7 +298,6 @@ namespace Project1 {
 		sr->Close();
 	}
 
-	private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
-	}
+	
 };
 }
