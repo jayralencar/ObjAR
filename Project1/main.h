@@ -15,6 +15,7 @@ namespace Project1 {
 	using namespace System::Drawing;
 	using namespace System::IO;
 	using namespace System::Runtime::InteropServices;
+	using namespace System::Diagnostics;
 	
 	
 
@@ -68,7 +69,13 @@ namespace Project1 {
 	private: System::Windows::Forms::RichTextBox^  richTextBox2;
 	private: System::Windows::Forms::Label^  resObjcet;
 	private: System::Windows::Forms::Label^  resMarcador;
+	private: System::Windows::Forms::Button^  button4;
+	private: System::Windows::Forms::Button^  button5;
 	private: System::ComponentModel::IContainer^  components;
+
+	private: System::IO::StreamReader^ srObjects;
+	private: System::IO::StreamReader^ srMarkers;
+
 
 
 
@@ -97,9 +104,11 @@ namespace Project1 {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
 			this->panel1->SuspendLayout();
@@ -127,6 +136,7 @@ namespace Project1 {
 			this->button3->TabIndex = 10;
 			this->button3->Text = L"Iniciar Aplicação";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &main::button3_Click);
 			// 
 			// panel1
 			// 
@@ -165,6 +175,7 @@ namespace Project1 {
 			this->button2->TabIndex = 3;
 			this->button2->Text = L"Selecionar Objeto 3D";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &main::button2_Click);
 			// 
 			// button1
 			// 
@@ -179,6 +190,7 @@ namespace Project1 {
 			// 
 			// panel2
 			// 
+			this->panel2->Controls->Add(this->button4);
 			this->panel2->Controls->Add(this->label1);
 			this->panel2->Controls->Add(this->richTextBox1);
 			this->panel2->Dock = System::Windows::Forms::DockStyle::Left;
@@ -186,6 +198,22 @@ namespace Project1 {
 			this->panel2->Name = L"panel2";
 			this->panel2->Size = System::Drawing::Size(332, 321);
 			this->panel2->TabIndex = 12;
+			// 
+			// button4
+			// 
+			this->button4->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->button4->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button4->ForeColor = System::Drawing::Color::Black;
+			this->button4->Location = System::Drawing::Point(12, 287);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(75, 23);
+			this->button4->TabIndex = 10;
+			this->button4->Text = L"Salvar";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &main::button4_Click);
 			// 
 			// label1
 			// 
@@ -206,6 +234,7 @@ namespace Project1 {
 			// 
 			// panel3
 			// 
+			this->panel3->Controls->Add(this->button5);
 			this->panel3->Controls->Add(this->label2);
 			this->panel3->Controls->Add(this->richTextBox2);
 			this->panel3->Dock = System::Windows::Forms::DockStyle::Right;
@@ -213,6 +242,22 @@ namespace Project1 {
 			this->panel3->Name = L"panel3";
 			this->panel3->Size = System::Drawing::Size(355, 321);
 			this->panel3->TabIndex = 13;
+			// 
+			// button5
+			// 
+			this->button5->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->button5->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
+			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button5->ForeColor = System::Drawing::Color::Black;
+			this->button5->Location = System::Drawing::Point(8, 287);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(75, 23);
+			this->button5->TabIndex = 11;
+			this->button5->Text = L"Salvar";
+			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &main::button5_Click);
 			// 
 			// label2
 			// 
@@ -255,8 +300,9 @@ namespace Project1 {
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		
 		System::String^ arquivo = Microsoft::VisualBasic::Interaction::InputBox(L"Nome do arquivo. Com .patt no final", L"Novo Marcador", L"file.patt", 500, 100);
+
 		System::String^ comando = "mk_patt -cpara=\"Data/camera_para.dat\" --output " + arquivo;
-		MessageBox::Show(comando);
+		//MessageBox::Show(comando);
 		IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
 		char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
 		system(nativeString);		
@@ -266,38 +312,80 @@ namespace Project1 {
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 		{
-			System::IO::StreamReader ^ sr = gcnew
+			System::IO::StreamReader^ sr = gcnew
 				System::IO::StreamReader(openFileDialog1->FileName);
 			//if (sr->GetType)
 			System::String^ name = Path::GetFileNameWithoutExtension(openFileDialog1->FileName);
 			System::String^ destino = Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/OSG/" + name + ".osg";
-			System::String^ comando = "osgconvd \"" + openFileDialog1->FileName + "\" \"" + destino +"\" && exit > output.msg 2> output.err";
+			System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino +"\" && exit > output.msg 2> output.err";
 			IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
 			char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-			system(nativeString);		//MessageBox::Show(comando);
+			//system(nativeString);		//MessageBox::Show(comando)
+			
+			ProcessStartInfo ^startInfo = gcnew ProcessStartInfo;
+			startInfo->FileName = "osgconvd.exe";
+			startInfo->CreateNoWindow = false; // start with no window
+			startInfo->Arguments = comando;
+
+			System::Diagnostics::Process^ myProcess;
+			myProcess = System::Diagnostics::Process::Start(startInfo);
+			
+			//myProcess->
+
+			myProcess->WaitForExit();
 
 			
+			MessageBox::Show("FOI");
 			
 			sr->Close();
 		}
 	}
 
+	private: void myProcess_HasExited(Object^ sender, EventArgs^ e)
+	{
+		
+		MessageBox::Show("SAIU");
+		
+	}
+
 	private: void getMarcadores(){
-		StreamReader^ sr = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile")+"/Documents/ObjAR/Data/markers.dat");
+		srMarkers = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile")+"/Documents/ObjAR/Data/markers.dat");
 		String^ line;
 
-		richTextBox1->Text = sr->ReadToEnd();
-		sr->Close();
+		richTextBox1->Text = srMarkers->ReadToEnd();
+		srMarkers->Close();
 	}
 
 	private: void getObjects(){
-		StreamReader^ sr = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/objects.dat");
+		srObjects = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/objects.dat");
 		String^ line;
 
-		richTextBox2->Text = sr->ReadToEnd();
-		sr->Close();
+		richTextBox2->Text = srObjects->ReadToEnd();
+		srObjects->Close();
+
+
 	}
 
 	
+
+private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+	//srMarkers->
+	StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/markers.dat");
+	sw->WriteLine(richTextBox1->Text);
+	sw->Close();
+	MessageBox::Show("Salvo Com sucesso");
+}
+		 
+
+		 
+private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+	StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/objects.dat");
+	sw->WriteLine(richTextBox2->Text);
+	sw->Close();
+	MessageBox::Show("Salvo Com sucesso");
+}
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+	system("start objAR.exe");
+}
 };
 }
