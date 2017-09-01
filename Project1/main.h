@@ -4,6 +4,7 @@
 #include <iostream>
 #include <windows.h>
 #using <Microsoft.VisualBasic.dll>
+#include "Shlwapi.h"
 
 namespace Project1 {
 
@@ -334,8 +335,21 @@ namespace Project1 {
 
 			myProcess->WaitForExit();
 
+			IntPtr ptrToNativeStrings = Marshal::StringToHGlobalAnsi(destino);
+			char* nativeStrings = static_cast<char*>(ptrToNativeStrings.ToPointer());
+
+			LPCWSTR destLPC = (LPCWSTR) nativeStrings;
+
 			
-			MessageBox::Show("FOI");
+
+			if (FileExists(nativeStrings)){
+				MessageBox::Show("Deu certo");
+			}
+			else{
+				MessageBox::Show("Aconteceu algum erro durante a conversão do arquivo, tente outro formato!");
+			}
+
+			
 			
 			sr->Close();
 		}
@@ -387,5 +401,19 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
 	system("start objAR.exe");
 }
+		 static bool FileExists(const char *path)
+		 {
+			 FILE *fp;
+			 fpos_t fsize = 0;
+
+			 if (!fopen_s(&fp, path, "r"))
+			 {
+				 fseek(fp, 0, SEEK_END);
+				 fgetpos(fp, &fsize);
+				 fclose(fp);
+			 }
+
+			 return fsize > 0;
+		 }
 };
 }
