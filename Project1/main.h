@@ -263,7 +263,7 @@ namespace Project1 {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(16, 11);
+			this->label2->Location = System::Drawing::Point(5, 3);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(43, 13);
 			this->label2->TabIndex = 10;
@@ -287,7 +287,7 @@ namespace Project1 {
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->button3);
 			this->Name = L"main";
-			this->Text = L"GearAPP - Versão 0.0.1 - Prof. Jayr Alencar";
+			this->Text = L"GearAPP - Versão 0.1.0 - Prof. Jayr Alencar";
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->panel2->ResumeLayout(false);
@@ -318,7 +318,7 @@ namespace Project1 {
 			//if (sr->GetType)
 			System::String^ name = Path::GetFileNameWithoutExtension(openFileDialog1->FileName);
 			System::String^ destino = Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/OSG/" + name + ".osg";
-			System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino +"\" && exit > output.msg 2> output.err";
+			System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino +"\"";
 			IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
 			char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
 			//system(nativeString);		//MessageBox::Show(comando)
@@ -327,6 +327,8 @@ namespace Project1 {
 			startInfo->FileName = "osgconvd.exe";
 			startInfo->CreateNoWindow = false; // start with no window
 			startInfo->Arguments = comando;
+
+			
 
 			System::Diagnostics::Process^ myProcess;
 			myProcess = System::Diagnostics::Process::Start(startInfo);
@@ -343,9 +345,11 @@ namespace Project1 {
 			
 
 			if (FileExists(nativeStrings)){
-				MessageBox::Show("Deu certo");
+				resObjcet->Text = "Salvo em " + destino;
+				MessageBox::Show("Salvo em " + destino);
 			}
 			else{
+				resObjcet->Text = "Aconteceu algum erro durante a conversão do arquivo, tente outro formato!";
 				MessageBox::Show("Aconteceu algum erro durante a conversão do arquivo, tente outro formato!");
 			}
 
