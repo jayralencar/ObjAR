@@ -287,7 +287,7 @@ namespace Project1 {
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->button3);
 			this->Name = L"main";
-			this->Text = L"GearAPP - Versão 0.1.0 - Prof. Jayr Alencar";
+			this->Text = L"GearAPP - Versão 1.0.0 - Prof. Jayr Alencar";
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->panel2->ResumeLayout(false);
@@ -324,7 +324,7 @@ namespace Project1 {
 			//system(nativeString);		//MessageBox::Show(comando)
 			
 			ProcessStartInfo ^startInfo = gcnew ProcessStartInfo;
-			startInfo->FileName = "osgconvd.exe";
+			startInfo->FileName = "osgconv.exe";
 			startInfo->CreateNoWindow = false; // start with no window
 			startInfo->Arguments = comando;
 
