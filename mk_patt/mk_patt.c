@@ -361,8 +361,8 @@ static void mouseEvent(int button, int state, int x, int y)
 		
 		
 
-		const char* dataPath = getenv("USERPROFILE");
-		strcat(dataPath, "/Documents/ObjAR/Data");
+		const char* dataPath = getenv("PUBLIC");
+		strcat(dataPath, "/ObjAR/Data");
 
 		char* fullPath = 0;
 

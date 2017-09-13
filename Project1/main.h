@@ -17,8 +17,8 @@ namespace Project1 {
 	using namespace System::IO;
 	using namespace System::Runtime::InteropServices;
 	using namespace System::Diagnostics;
-	
-	
+
+
 
 	/// <summary>
 	/// Summary for main
@@ -34,6 +34,7 @@ namespace Project1 {
 			//
 			this->getMarcadores();
 			this->getObjects();
+
 		}
 
 	protected:
@@ -287,7 +288,7 @@ namespace Project1 {
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->button3);
 			this->Name = L"main";
-			this->Text = L"GearAPP - Versão 1.0.0 - Prof. Jayr Alencar";
+			this->Text = L"GearAPP - Versão 1.1.0 - Prof. Jayr Alencar";
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->panel2->ResumeLayout(false);
@@ -299,16 +300,16 @@ namespace Project1 {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+
 		System::String^ arquivo = Microsoft::VisualBasic::Interaction::InputBox(L"Nome do arquivo. Com .patt no final", L"Novo Marcador", L"file.patt", 500, 100);
 
 		System::String^ comando = "mk_patt -cpara=\"Data/camera_para.dat\" --output " + arquivo;
 		//MessageBox::Show(comando);
 		IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
 		char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-		system(nativeString);		
+		system(nativeString);
 		resMarcador->Text = "Salvo como Data/" + arquivo;
-		
+
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
@@ -317,22 +318,23 @@ namespace Project1 {
 				System::IO::StreamReader(openFileDialog1->FileName);
 			//if (sr->GetType)
 			System::String^ name = Path::GetFileNameWithoutExtension(openFileDialog1->FileName);
-			System::String^ destino = Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/OSG/" + name + ".osg";
-			System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino +"\"";
+			System::String^ destino = Environment::GetEnvironmentVariable("public") + "/ObjAR/OSG/" + name + ".osg";
+			System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino + "\"";
 			IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
 			char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-			//system(nativeString);		//MessageBox::Show(comando)
-			
+			//system(nativeString);		
+			//MessageBox::Show(comando);
+
 			ProcessStartInfo ^startInfo = gcnew ProcessStartInfo;
 			startInfo->FileName = "osgconv.exe";
 			startInfo->CreateNoWindow = false; // start with no window
 			startInfo->Arguments = comando;
 
-			
+
 
 			System::Diagnostics::Process^ myProcess;
 			myProcess = System::Diagnostics::Process::Start(startInfo);
-			
+
 			//myProcess->
 
 			myProcess->WaitForExit();
@@ -340,9 +342,9 @@ namespace Project1 {
 			IntPtr ptrToNativeStrings = Marshal::StringToHGlobalAnsi(destino);
 			char* nativeStrings = static_cast<char*>(ptrToNativeStrings.ToPointer());
 
-			LPCWSTR destLPC = (LPCWSTR) nativeStrings;
+			LPCWSTR destLPC = (LPCWSTR)nativeStrings;
 
-			
+
 
 			if (FileExists(nativeStrings)){
 				resObjcet->Text = "Salvo em " + destino;
@@ -353,21 +355,21 @@ namespace Project1 {
 				MessageBox::Show("Aconteceu algum erro durante a conversão do arquivo, tente outro formato!");
 			}
 
-			
-			
+
+
 			sr->Close();
 		}
 	}
 
 	private: void myProcess_HasExited(Object^ sender, EventArgs^ e)
 	{
-		
+
 		MessageBox::Show("SAIU");
-		
+
 	}
 
 	private: void getMarcadores(){
-		srMarkers = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile")+"/Documents/ObjAR/Data/markers.dat");
+		srMarkers = gcnew StreamReader(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/markers.dat");
 		String^ line;
 
 		richTextBox1->Text = srMarkers->ReadToEnd();
@@ -375,7 +377,7 @@ namespace Project1 {
 	}
 
 	private: void getObjects(){
-		srObjects = gcnew StreamReader(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/objects.dat");
+		srObjects = gcnew StreamReader(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/objects.dat");
 		String^ line;
 
 		richTextBox2->Text = srObjects->ReadToEnd();
@@ -384,40 +386,43 @@ namespace Project1 {
 
 	}
 
+
+
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
+		//srMarkers->
+		StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/markers.dat");
+		sw->WriteLine(richTextBox1->Text);
+		sw->Close();
+		MessageBox::Show("Salvo Com sucesso");
+	}
+
+
+
+	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+		StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/objects.dat");
+		sw->WriteLine(richTextBox2->Text);
+		sw->Close();
+		MessageBox::Show("Salvo Com sucesso");
+	}
+	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
+		system("start objAR.exe");
+	}
+	static bool FileExists(const char *path)
+	{
+		FILE *fp;
+		fpos_t fsize = 0;
+
+		if (!fopen_s(&fp, path, "r"))
+		{
+			fseek(fp, 0, SEEK_END);
+			fgetpos(fp, &fsize);
+			fclose(fp);
+		}
+
+		return fsize > 0;
+	}
 	
+	};
 
-private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-	//srMarkers->
-	StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/markers.dat");
-	sw->WriteLine(richTextBox1->Text);
-	sw->Close();
-	MessageBox::Show("Salvo Com sucesso");
-}
-		 
 
-		 
-private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
-	StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("userprofile") + "/Documents/ObjAR/Data/objects.dat");
-	sw->WriteLine(richTextBox2->Text);
-	sw->Close();
-	MessageBox::Show("Salvo Com sucesso");
-}
-private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-	system("start objAR.exe");
-}
-		 static bool FileExists(const char *path)
-		 {
-			 FILE *fp;
-			 fpos_t fsize = 0;
-
-			 if (!fopen_s(&fp, path, "r"))
-			 {
-				 fseek(fp, 0, SEEK_END);
-				 fgetpos(fp, &fsize);
-				 fclose(fp);
-			 }
-
-			 return fsize > 0;
-		 }
-};
 }

@@ -22,7 +22,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 OutputDir=C:\dev\AR\ObjAR\setup\output
-OutputBaseFilename=ObjAR_setup_v1.0.0
+OutputBaseFilename=ObjAR_setup_v1.1.0
 Compression=lzma
 SolidCompression=yes
 
@@ -37,8 +37,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "C:\dev\AR\ObjAR\Release\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\dev\AR\ObjAR\Release\Data\*"; DestDir: "{app}\Data"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\dev\AR\ObjAR\Release\osgPlugins-3.2.1\*"; DestDir: "{app}\osgPlugins-3.2.1"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Jayr Alencar\Documents\objAR\Data\*"; DestDir: "{userdocs}\ObjAR\Data"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Jayr Alencar\Documents\objAR\OSG\*"; DestDir: "{userdocs}\ObjAR\OSG"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Jayr Alencar\Documents\objAR\Data\*"; DestDir: "C:\Users\Public\ObjAR\Data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Jayr Alencar\Documents\objAR\OSG\*"; DestDir: "C:\Users\Public\ObjAR\OSG"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\OpenSceneGraph-3.0.1\build\bin\*"; DestDir: "{app}\osgbin"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

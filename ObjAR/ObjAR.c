@@ -173,8 +173,8 @@ void marcador()
 
 int main(int argc, char** argv)
 {
-	char	*markersENV = getenv("USERPROFILE");
-	char	*objectsENV = getenv("USERPROFILE");
+	char	*markersENV = getenv("PUBLIC");
+	char	*objectsENV = getenv("PUBLIC");
 	char    glutGamemode[32] = "";
 	char   *vconf = NULL;
 	char    cparaDefault[] =  "Data/camera_para.dat";
@@ -186,7 +186,7 @@ int main(int argc, char** argv)
 	 char* markerConfigDataFilename = 0;
 	 char* objectDataFilename = 0;
 
-	 const char* dataPath = getenv("USERPROFILE");
+	 const char* dataPath = getenv("PUBLIC");
 	 char* fullPath = 0;
 	 if (dataPath)
 	 {
@@ -194,13 +194,13 @@ int main(int argc, char** argv)
 		 markerConfigDataFilename = malloc(strlen(dataPath) + 33 + 1);
 		 if (markerConfigDataFilename)
 		 {
-			 sprintf(markerConfigDataFilename, "%s/Documents/ObjAR/Data/markers.dat", dataPath);
+			 sprintf(markerConfigDataFilename, "%s/ObjAR/Data/markers.dat", dataPath);
 		 }
 
 		 objectDataFilename = malloc(strlen(dataPath) + 33 + 1);
 		 if (objectDataFilename)
 		 {
-			 sprintf(objectDataFilename, "%s/Documents/ObjAR/Data/objects.dat", dataPath);
+			 sprintf(objectDataFilename, "%s/ObjAR/Data/objects.dat", dataPath);
 		 }
 	 }
 	 
