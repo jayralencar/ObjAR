@@ -20,6 +20,7 @@ namespace Project1 {
 
 
 
+
 	/// <summary>
 	/// Summary for main
 	/// </summary>
@@ -32,8 +33,7 @@ namespace Project1 {
 			//
 			//TODO: Add the constructor code here
 			//
-			this->getMarcadores();
-			this->getObjects();
+			
 
 		}
 
@@ -51,35 +51,48 @@ namespace Project1 {
 
 
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
-
-
-
 	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
-
-
-
-
-	private: System::Windows::Forms::Button^  button3;
-	private: System::Windows::Forms::Panel^  panel1;
-	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::Button^  button1;
-	private: System::Windows::Forms::Panel^  panel2;
-	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::RichTextBox^  richTextBox1;
-	private: System::Windows::Forms::Panel^  panel3;
-	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::RichTextBox^  richTextBox2;
-	private: System::Windows::Forms::Label^  resObjcet;
-	private: System::Windows::Forms::Label^  resMarcador;
-	private: System::Windows::Forms::Button^  button4;
-	private: System::Windows::Forms::Button^  button5;
 	private: System::ComponentModel::IContainer^  components;
 
 	private: System::IO::StreamReader^ srObjects;
+	private: System::Windows::Forms::MenuStrip^  menuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem1;
+	private: System::Windows::Forms::ToolStripMenuItem^  novoToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  salvarToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  salvarComoToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  exportarToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  projetoToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  aplicarToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  executarToolStripMenuItem;
+	private: System::Windows::Forms::Panel^  panel1;
+	private: System::Windows::Forms::DataGridView^  dataGridView1;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Panel^  panel2;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Button^  excluirMarcador;
+	private: System::Windows::Forms::Button^  novoMarcador;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  arquivo;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  tipo;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  frequencia;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  filtro;
+	private: System::Windows::Forms::DataGridView^  dataGridView2;
+
+
+
+
+
+	private: System::Windows::Forms::Button^  excluirObjeto;
+	private: System::Windows::Forms::Button^  novoObj;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  arquivo_obj;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  marcador;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  translation;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  rotation;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  scale;
 	private: System::IO::StreamReader^ srMarkers;
+	
 
-
-
+	
 
 	protected:
 
@@ -99,23 +112,40 @@ namespace Project1 {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
-			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->toolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->novoToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->abrirToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->salvarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->salvarComoToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exportarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->projetoToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->aplicarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->executarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->resObjcet = (gcnew System::Windows::Forms::Label());
-			this->resMarcador = (gcnew System::Windows::Forms::Label());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->panel2 = (gcnew System::Windows::Forms::Panel());
-			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->excluirMarcador = (gcnew System::Windows::Forms::Button());
+			this->novoMarcador = (gcnew System::Windows::Forms::Button());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->arquivo = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->tipo = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->frequencia = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->filtro = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->richTextBox1 = (gcnew System::Windows::Forms::RichTextBox());
-			this->panel3 = (gcnew System::Windows::Forms::Panel());
-			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->excluirObjeto = (gcnew System::Windows::Forms::Button());
+			this->novoObj = (gcnew System::Windows::Forms::Button());
+			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->richTextBox2 = (gcnew System::Windows::Forms::RichTextBox());
+			this->arquivo_obj = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->marcador = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->translation = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->rotation = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->scale = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->menuStrip1->SuspendLayout();
 			this->panel1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel2->SuspendLayout();
-			this->panel3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// openFileDialog1
@@ -128,238 +158,265 @@ namespace Project1 {
 			this->contextMenuStrip1->Name = L"contextMenuStrip1";
 			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
 			// 
-			// button3
+			// menuStrip1
 			// 
-			this->button3->Dock = System::Windows::Forms::DockStyle::Bottom;
-			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button3->Location = System::Drawing::Point(0, 397);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(693, 36);
-			this->button3->TabIndex = 10;
-			this->button3->Text = L"Iniciar Aplicação";
-			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &main::button3_Click);
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->toolStripMenuItem1,
+					this->projetoToolStripMenuItem
+			});
+			this->menuStrip1->Location = System::Drawing::Point(0, 0);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Size = System::Drawing::Size(864, 24);
+			this->menuStrip1->TabIndex = 1;
+			this->menuStrip1->Text = L"menuStrip1";
+			// 
+			// toolStripMenuItem1
+			// 
+			this->toolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
+				this->novoToolStripMenuItem,
+					this->abrirToolStripMenuItem, this->salvarToolStripMenuItem, this->salvarComoToolStripMenuItem, this->exportarToolStripMenuItem
+			});
+			this->toolStripMenuItem1->Name = L"toolStripMenuItem1";
+			this->toolStripMenuItem1->Size = System::Drawing::Size(61, 20);
+			this->toolStripMenuItem1->Text = L"Arquivo";
+			this->toolStripMenuItem1->Click += gcnew System::EventHandler(this, &main::toolStripMenuItem1_Click);
+			// 
+			// novoToolStripMenuItem
+			// 
+			this->novoToolStripMenuItem->Name = L"novoToolStripMenuItem";
+			this->novoToolStripMenuItem->Size = System::Drawing::Size(141, 22);
+			this->novoToolStripMenuItem->Text = L"Novo";
+			// 
+			// abrirToolStripMenuItem
+			// 
+			this->abrirToolStripMenuItem->Name = L"abrirToolStripMenuItem";
+			this->abrirToolStripMenuItem->Size = System::Drawing::Size(141, 22);
+			this->abrirToolStripMenuItem->Text = L"Abrir";
+			// 
+			// salvarToolStripMenuItem
+			// 
+			this->salvarToolStripMenuItem->Name = L"salvarToolStripMenuItem";
+			this->salvarToolStripMenuItem->Size = System::Drawing::Size(141, 22);
+			this->salvarToolStripMenuItem->Text = L"Salvar";
+			// 
+			// salvarComoToolStripMenuItem
+			// 
+			this->salvarComoToolStripMenuItem->Name = L"salvarComoToolStripMenuItem";
+			this->salvarComoToolStripMenuItem->Size = System::Drawing::Size(141, 22);
+			this->salvarComoToolStripMenuItem->Text = L"Salvar Como";
+			// 
+			// exportarToolStripMenuItem
+			// 
+			this->exportarToolStripMenuItem->Name = L"exportarToolStripMenuItem";
+			this->exportarToolStripMenuItem->Size = System::Drawing::Size(141, 22);
+			this->exportarToolStripMenuItem->Text = L"Exportar";
+			// 
+			// projetoToolStripMenuItem
+			// 
+			this->projetoToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->aplicarToolStripMenuItem,
+					this->executarToolStripMenuItem
+			});
+			this->projetoToolStripMenuItem->Name = L"projetoToolStripMenuItem";
+			this->projetoToolStripMenuItem->Size = System::Drawing::Size(57, 20);
+			this->projetoToolStripMenuItem->Text = L"Projeto";
+			// 
+			// aplicarToolStripMenuItem
+			// 
+			this->aplicarToolStripMenuItem->Name = L"aplicarToolStripMenuItem";
+			this->aplicarToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->aplicarToolStripMenuItem->Text = L"Aplicar";
+			// 
+			// executarToolStripMenuItem
+			// 
+			this->executarToolStripMenuItem->Name = L"executarToolStripMenuItem";
+			this->executarToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->executarToolStripMenuItem->Text = L"Executar";
 			// 
 			// panel1
 			// 
-			this->panel1->Controls->Add(this->resObjcet);
-			this->panel1->Controls->Add(this->resMarcador);
-			this->panel1->Controls->Add(this->button2);
-			this->panel1->Controls->Add(this->button1);
-			this->panel1->Dock = System::Windows::Forms::DockStyle::Top;
-			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Controls->Add(this->excluirMarcador);
+			this->panel1->Controls->Add(this->novoMarcador);
+			this->panel1->Controls->Add(this->dataGridView1);
+			this->panel1->Controls->Add(this->label1);
+			this->panel1->Dock = System::Windows::Forms::DockStyle::Left;
+			this->panel1->Location = System::Drawing::Point(0, 24);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(693, 76);
-			this->panel1->TabIndex = 11;
+			this->panel1->Size = System::Drawing::Size(443, 419);
+			this->panel1->TabIndex = 2;
 			// 
-			// resObjcet
+			// excluirMarcador
 			// 
-			this->resObjcet->AutoSize = true;
-			this->resObjcet->Location = System::Drawing::Point(343, 56);
-			this->resObjcet->Name = L"resObjcet";
-			this->resObjcet->Size = System::Drawing::Size(0, 13);
-			this->resObjcet->TabIndex = 5;
+			this->excluirMarcador->Location = System::Drawing::Point(92, 40);
+			this->excluirMarcador->Name = L"excluirMarcador";
+			this->excluirMarcador->Size = System::Drawing::Size(75, 23);
+			this->excluirMarcador->TabIndex = 3;
+			this->excluirMarcador->Text = L"Excluir";
+			this->excluirMarcador->UseVisualStyleBackColor = true;
 			// 
-			// resMarcador
+			// novoMarcador
 			// 
-			this->resMarcador->AutoSize = true;
-			this->resMarcador->Location = System::Drawing::Point(13, 57);
-			this->resMarcador->Name = L"resMarcador";
-			this->resMarcador->Size = System::Drawing::Size(0, 13);
-			this->resMarcador->TabIndex = 4;
+			this->novoMarcador->Location = System::Drawing::Point(10, 40);
+			this->novoMarcador->Name = L"novoMarcador";
+			this->novoMarcador->Size = System::Drawing::Size(75, 23);
+			this->novoMarcador->TabIndex = 2;
+			this->novoMarcador->Text = L"Novo";
+			this->novoMarcador->UseVisualStyleBackColor = true;
+			this->novoMarcador->Click += gcnew System::EventHandler(this, &main::novoMarcador_Click);
 			// 
-			// button2
+			// dataGridView1
 			// 
-			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button2->Location = System::Drawing::Point(343, 12);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(165, 36);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"Selecionar Objeto 3D";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &main::button2_Click);
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
+				this->arquivo,
+					this->tipo, this->frequencia, this->filtro
+			});
+			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Bottom;
+			this->dataGridView1->Location = System::Drawing::Point(0, 69);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(443, 350);
+			this->dataGridView1->TabIndex = 1;
+			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &main::dataGridView1_CellContentClick);
 			// 
-			// button1
+			// arquivo
 			// 
-			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button1->Location = System::Drawing::Point(12, 12);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(165, 36);
-			this->button1->TabIndex = 2;
-			this->button1->Text = L"Criar novo marcador";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &main::button1_Click);
+			this->arquivo->HeaderText = L"Arquivo";
+			this->arquivo->Name = L"arquivo";
 			// 
-			// panel2
+			// tipo
 			// 
-			this->panel2->Controls->Add(this->button4);
-			this->panel2->Controls->Add(this->label1);
-			this->panel2->Controls->Add(this->richTextBox1);
-			this->panel2->Dock = System::Windows::Forms::DockStyle::Left;
-			this->panel2->Location = System::Drawing::Point(0, 76);
-			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(332, 321);
-			this->panel2->TabIndex = 12;
+			this->tipo->HeaderText = L"TIPO";
+			this->tipo->Name = L"tipo";
 			// 
-			// button4
+			// frequencia
 			// 
-			this->button4->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->button4->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->button4->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button4->ForeColor = System::Drawing::Color::Black;
-			this->button4->Location = System::Drawing::Point(12, 287);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(75, 23);
-			this->button4->TabIndex = 10;
-			this->button4->Text = L"Salvar";
-			this->button4->UseVisualStyleBackColor = true;
-			this->button4->Click += gcnew System::EventHandler(this, &main::button4_Click);
+			this->frequencia->HeaderText = L"Frequencia";
+			this->frequencia->Name = L"frequencia";
+			// 
+			// filtro
+			// 
+			this->filtro->HeaderText = L"Filtro";
+			this->filtro->Name = L"filtro";
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(9, 3);
+			this->label1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.3F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(12, 15);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(66, 13);
-			this->label1->TabIndex = 9;
-			this->label1->Text = L"Marcadores:";
+			this->label1->Size = System::Drawing::Size(73, 15);
+			this->label1->TabIndex = 0;
+			this->label1->Text = L"Marcadores";
 			// 
-			// richTextBox1
+			// panel2
 			// 
-			this->richTextBox1->Location = System::Drawing::Point(12, 27);
-			this->richTextBox1->Name = L"richTextBox1";
-			this->richTextBox1->Size = System::Drawing::Size(313, 254);
-			this->richTextBox1->TabIndex = 8;
-			this->richTextBox1->Text = L"";
+			this->panel2->Controls->Add(this->excluirObjeto);
+			this->panel2->Controls->Add(this->novoObj);
+			this->panel2->Controls->Add(this->dataGridView2);
+			this->panel2->Controls->Add(this->label2);
+			this->panel2->Dock = System::Windows::Forms::DockStyle::Right;
+			this->panel2->Location = System::Drawing::Point(449, 24);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(415, 419);
+			this->panel2->TabIndex = 3;
 			// 
-			// panel3
+			// excluirObjeto
 			// 
-			this->panel3->Controls->Add(this->button5);
-			this->panel3->Controls->Add(this->label2);
-			this->panel3->Controls->Add(this->richTextBox2);
-			this->panel3->Dock = System::Windows::Forms::DockStyle::Right;
-			this->panel3->Location = System::Drawing::Point(338, 76);
-			this->panel3->Name = L"panel3";
-			this->panel3->Size = System::Drawing::Size(355, 321);
-			this->panel3->TabIndex = 13;
+			this->excluirObjeto->Location = System::Drawing::Point(92, 40);
+			this->excluirObjeto->Name = L"excluirObjeto";
+			this->excluirObjeto->Size = System::Drawing::Size(75, 23);
+			this->excluirObjeto->TabIndex = 4;
+			this->excluirObjeto->Text = L"Excluir";
+			this->excluirObjeto->UseVisualStyleBackColor = true;
 			// 
-			// button5
+			// novoObj
 			// 
-			this->button5->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->button5->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
-				static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->button5->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->button5->ForeColor = System::Drawing::Color::Black;
-			this->button5->Location = System::Drawing::Point(8, 287);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(75, 23);
-			this->button5->TabIndex = 11;
-			this->button5->Text = L"Salvar";
-			this->button5->UseVisualStyleBackColor = true;
-			this->button5->Click += gcnew System::EventHandler(this, &main::button5_Click);
+			this->novoObj->Location = System::Drawing::Point(10, 40);
+			this->novoObj->Name = L"novoObj";
+			this->novoObj->Size = System::Drawing::Size(75, 23);
+			this->novoObj->TabIndex = 3;
+			this->novoObj->Text = L"Novo";
+			this->novoObj->UseVisualStyleBackColor = true;
+			// 
+			// dataGridView2
+			// 
+			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				this->arquivo_obj,
+					this->marcador, this->translation, this->rotation, this->scale
+			});
+			this->dataGridView2->Dock = System::Windows::Forms::DockStyle::Bottom;
+			this->dataGridView2->Location = System::Drawing::Point(0, 69);
+			this->dataGridView2->Name = L"dataGridView2";
+			this->dataGridView2->Size = System::Drawing::Size(415, 350);
+			this->dataGridView2->TabIndex = 2;
+			this->dataGridView2->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &main::dataGridView2_CellContentClick);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(5, 3);
+			this->label2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.3F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label2->Location = System::Drawing::Point(7, 15);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(43, 13);
-			this->label2->TabIndex = 10;
+			this->label2->Size = System::Drawing::Size(49, 15);
+			this->label2->TabIndex = 1;
 			this->label2->Text = L"Objetos";
 			// 
-			// richTextBox2
+			// arquivo_obj
 			// 
-			this->richTextBox2->Location = System::Drawing::Point(5, 27);
-			this->richTextBox2->Name = L"richTextBox2";
-			this->richTextBox2->Size = System::Drawing::Size(338, 254);
-			this->richTextBox2->TabIndex = 9;
-			this->richTextBox2->Text = L"";
+			this->arquivo_obj->HeaderText = L"Arquivo";
+			this->arquivo_obj->Name = L"arquivo_obj";
+			// 
+			// marcador
+			// 
+			this->marcador->HeaderText = L"Marcador";
+			this->marcador->Name = L"marcador";
+			// 
+			// translation
+			// 
+			this->translation->HeaderText = L"Translation";
+			this->translation->Name = L"translation";
+			// 
+			// rotation
+			// 
+			this->rotation->HeaderText = L"Rotation";
+			this->rotation->Name = L"rotation";
+			// 
+			// scale
+			// 
+			this->scale->HeaderText = L"Scale";
+			this->scale->Name = L"scale";
 			// 
 			// main
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(693, 433);
-			this->Controls->Add(this->panel3);
+			this->ClientSize = System::Drawing::Size(864, 443);
 			this->Controls->Add(this->panel2);
 			this->Controls->Add(this->panel1);
-			this->Controls->Add(this->button3);
+			this->Controls->Add(this->menuStrip1);
+			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"main";
 			this->Text = L"GearAPP - Versão 1.1.0 - Prof. Jayr Alencar";
+			this->menuStrip1->ResumeLayout(false);
+			this->menuStrip1->PerformLayout();
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->panel2->ResumeLayout(false);
 			this->panel2->PerformLayout();
-			this->panel3->ResumeLayout(false);
-			this->panel3->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-
-		System::String^ arquivo = Microsoft::VisualBasic::Interaction::InputBox(L"Nome do arquivo. Com .patt no final", L"Novo Marcador", L"file.patt", 500, 100);
-
-		System::String^ comando = "mk_patt -cpara=\"Data/camera_para.dat\" --output " + arquivo;
-		//MessageBox::Show(comando);
-		IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
-		char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-		system(nativeString);
-		resMarcador->Text = "Salvo como Data/" + arquivo;
-
-	}
-	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-		{
-			System::IO::StreamReader^ sr = gcnew
-				System::IO::StreamReader(openFileDialog1->FileName);
-			//if (sr->GetType)
-			System::String^ name = Path::GetFileNameWithoutExtension(openFileDialog1->FileName);
-			System::String^ destino = Environment::GetEnvironmentVariable("public") + "/ObjAR/OSG/" + name + ".osg";
-			System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino + "\"";
-			IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
-			char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-			//system(nativeString);		
-			//MessageBox::Show(comando);
-
-			ProcessStartInfo ^startInfo = gcnew ProcessStartInfo;
-			startInfo->FileName = "osgconv.exe";
-			startInfo->CreateNoWindow = false; // start with no window
-			startInfo->Arguments = comando;
-
-
-
-			System::Diagnostics::Process^ myProcess;
-			myProcess = System::Diagnostics::Process::Start(startInfo);
-
-			//myProcess->
-
-			myProcess->WaitForExit();
-
-			IntPtr ptrToNativeStrings = Marshal::StringToHGlobalAnsi(destino);
-			char* nativeStrings = static_cast<char*>(ptrToNativeStrings.ToPointer());
-
-			LPCWSTR destLPC = (LPCWSTR)nativeStrings;
-
-
-
-			if (FileExists(nativeStrings)){
-				resObjcet->Text = "Salvo em " + destino;
-				MessageBox::Show("Salvo em " + destino);
-			}
-			else{
-				resObjcet->Text = "Aconteceu algum erro durante a conversão do arquivo, tente outro formato!";
-				MessageBox::Show("Aconteceu algum erro durante a conversão do arquivo, tente outro formato!");
-			}
-
-
-
-			sr->Close();
-		}
-	}
+	
+	
 
 	private: void myProcess_HasExited(Object^ sender, EventArgs^ e)
 	{
@@ -368,45 +425,11 @@ namespace Project1 {
 
 	}
 
-	private: void getMarcadores(){
-		srMarkers = gcnew StreamReader(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/markers.dat");
-		String^ line;
-
-		richTextBox1->Text = srMarkers->ReadToEnd();
-		srMarkers->Close();
-	}
-
-	private: void getObjects(){
-		srObjects = gcnew StreamReader(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/objects.dat");
-		String^ line;
-
-		richTextBox2->Text = srObjects->ReadToEnd();
-		srObjects->Close();
-
-
-	}
+	
 
 
 
-	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) {
-		//srMarkers->
-		StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/markers.dat");
-		sw->WriteLine(richTextBox1->Text);
-		sw->Close();
-		MessageBox::Show("Salvo Com sucesso");
-	}
 
-
-
-	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
-		StreamWriter ^ sw = gcnew StreamWriter(Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/objects.dat");
-		sw->WriteLine(richTextBox2->Text);
-		sw->Close();
-		MessageBox::Show("Salvo Com sucesso");
-	}
-	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e) {
-		system("start objAR.exe");
-	}
 	static bool FileExists(const char *path)
 	{
 		FILE *fp;
@@ -422,7 +445,23 @@ namespace Project1 {
 		return fsize > 0;
 	}
 	
-	};
+	private: System::Void toolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
+}
+private: System::Void dataGridView2_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
+}
+private: System::Void novoMarcador_Click(System::Object^  sender, System::EventArgs^  e) {
+	System::String^ arquivo = Microsoft::VisualBasic::Interaction::InputBox(L"Nome do arquivo. Com .patt no final", L"Novo Marcador", L"file.patt", 500, 100);
+
+	System::String^ comando = "mk_patt -cpara=\"Data/camera_para.dat\" --output " + arquivo;
+	//MessageBox::Show(comando);
+	IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
+	char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
+	system(nativeString);
+	
+}
+};
 
 
 }
