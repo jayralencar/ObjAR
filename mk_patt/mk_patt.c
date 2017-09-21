@@ -91,7 +91,7 @@ static ARGViewportHandle  *vp1;
 static int                 debugMode = AR_DEBUG_DISABLE;
 static ARdouble            pattRatio = (ARdouble)(AR_PATT_RATIO);
 static int                 gPattSize = AR_PATT_SIZE1;
-static char				   *filename;
+static char				   *filename = NULL;
 
 
 
@@ -358,21 +358,22 @@ static void mouseEvent(int button, int state, int x, int y)
 			name = filename;
 		}
 
-		
-		
+
+
 
 		const char* dataPath = getenv("PUBLIC");
-		strcat(dataPath, "/ObjAR/Data");
+		strcat(dataPath, "/ObjAR/Data/");
 
 		char* fullPath = 0;
 
 		if (dataPath)
 		{
 			/* 6 for "/index" and 1 for terminating null character. */
-			fullPath = malloc(strlen(dataPath) + strlen(name) + 1);
+			fullPath = malloc(strlen(dataPath) + strlen(name));
 			if (fullPath)
-			{	
-				sprintf(fullPath, "%s/%s", dataPath, name);
+			{
+				sprintf(fullPath, "%s%s", dataPath, name);
+				
 			}
 		}
 
@@ -380,20 +381,12 @@ static void mouseEvent(int button, int state, int x, int y)
 		if (arPattSave(image, cparam.xsize, cparam.ysize, pixelFormat, &(cparamLT->paramLTf),
 			arHandle->arImageProcMode, target, pattRatio, gPattSize, fullPath) < 0) {
 			ARLOGe("ERROR!!\n");
+			
 		}
 		else {
 			ARLOG("  Saved\n");
-			int msgboxID = MessageBox(
-				NULL,
-				"Salvo com sucesso",
-				"Salvo com sucesso",
-				MB_ICONEXCLAMATION | MB_OK
-			);
-
-			
-				cleanup();
-				exit(0);
-			
+			cleanup();
+			exit(0);
 		}
 	}
 }

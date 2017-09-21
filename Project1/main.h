@@ -72,10 +72,10 @@ namespace Project1 {
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Button^  excluirMarcador;
 	private: System::Windows::Forms::Button^  novoMarcador;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  arquivo;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  tipo;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  frequencia;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  filtro;
+
+
+
+
 	private: System::Windows::Forms::DataGridView^  dataGridView2;
 
 
@@ -84,11 +84,33 @@ namespace Project1 {
 
 	private: System::Windows::Forms::Button^  excluirObjeto;
 	private: System::Windows::Forms::Button^  novoObj;
+
+
+
+
+
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  ID;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  arquivo;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  tipo;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  frequencia;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  filtro;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  arquivo_obj;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  marcador;
+	private: System::Windows::Forms::DataGridViewComboBoxColumn^  marcador;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  translation;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  rotation;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  scale;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  LIGHTING;
+
+
+
+
+
+
+
+
+
+
+
 	private: System::IO::StreamReader^ srMarkers;
 	
 
@@ -126,6 +148,7 @@ namespace Project1 {
 			this->excluirMarcador = (gcnew System::Windows::Forms::Button());
 			this->novoMarcador = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->ID = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->arquivo = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tipo = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->frequencia = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -137,10 +160,11 @@ namespace Project1 {
 			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->arquivo_obj = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->marcador = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->marcador = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
 			this->translation = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->rotation = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->scale = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->LIGHTING = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->menuStrip1->SuspendLayout();
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
@@ -160,13 +184,16 @@ namespace Project1 {
 			// 
 			// menuStrip1
 			// 
+			this->menuStrip1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left));
+			this->menuStrip1->Dock = System::Windows::Forms::DockStyle::None;
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
 				this->toolStripMenuItem1,
 					this->projetoToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(864, 24);
+			this->menuStrip1->Size = System::Drawing::Size(218, 24);
 			this->menuStrip1->TabIndex = 1;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -224,8 +251,9 @@ namespace Project1 {
 			// aplicarToolStripMenuItem
 			// 
 			this->aplicarToolStripMenuItem->Name = L"aplicarToolStripMenuItem";
-			this->aplicarToolStripMenuItem->Size = System::Drawing::Size(118, 22);
+			this->aplicarToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->aplicarToolStripMenuItem->Text = L"Aplicar";
+			this->aplicarToolStripMenuItem->Click += gcnew System::EventHandler(this, &main::aplicarToolStripMenuItem_Click);
 			// 
 			// executarToolStripMenuItem
 			// 
@@ -235,11 +263,13 @@ namespace Project1 {
 			// 
 			// panel1
 			// 
+			this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->panel1->AutoSize = true;
 			this->panel1->Controls->Add(this->excluirMarcador);
 			this->panel1->Controls->Add(this->novoMarcador);
 			this->panel1->Controls->Add(this->dataGridView1);
 			this->panel1->Controls->Add(this->label1);
-			this->panel1->Dock = System::Windows::Forms::DockStyle::Left;
 			this->panel1->Location = System::Drawing::Point(0, 24);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(443, 419);
@@ -253,6 +283,7 @@ namespace Project1 {
 			this->excluirMarcador->TabIndex = 3;
 			this->excluirMarcador->Text = L"Excluir";
 			this->excluirMarcador->UseVisualStyleBackColor = true;
+			this->excluirMarcador->Click += gcnew System::EventHandler(this, &main::excluirMarcador_Click);
 			// 
 			// novoMarcador
 			// 
@@ -266,9 +297,10 @@ namespace Project1 {
 			// 
 			// dataGridView1
 			// 
+			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
-				this->arquivo,
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				this->ID, this->arquivo,
 					this->tipo, this->frequencia, this->filtro
 			});
 			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Bottom;
@@ -277,6 +309,11 @@ namespace Project1 {
 			this->dataGridView1->Size = System::Drawing::Size(443, 350);
 			this->dataGridView1->TabIndex = 1;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &main::dataGridView1_CellContentClick);
+			// 
+			// ID
+			// 
+			this->ID->HeaderText = L"ID";
+			this->ID->Name = L"ID";
 			// 
 			// arquivo
 			// 
@@ -312,14 +349,17 @@ namespace Project1 {
 			// 
 			// panel2
 			// 
+			this->panel2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->panel2->AutoSize = true;
 			this->panel2->Controls->Add(this->excluirObjeto);
 			this->panel2->Controls->Add(this->novoObj);
 			this->panel2->Controls->Add(this->dataGridView2);
 			this->panel2->Controls->Add(this->label2);
-			this->panel2->Dock = System::Windows::Forms::DockStyle::Right;
-			this->panel2->Location = System::Drawing::Point(449, 24);
+			this->panel2->Location = System::Drawing::Point(446, 24);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(415, 419);
+			this->panel2->Size = System::Drawing::Size(418, 419);
 			this->panel2->TabIndex = 3;
 			// 
 			// excluirObjeto
@@ -339,18 +379,20 @@ namespace Project1 {
 			this->novoObj->TabIndex = 3;
 			this->novoObj->Text = L"Novo";
 			this->novoObj->UseVisualStyleBackColor = true;
+			this->novoObj->Click += gcnew System::EventHandler(this, &main::novoObj_Click);
 			// 
 			// dataGridView2
 			// 
+			this->dataGridView2->AllowUserToAddRows = false;
 			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+			this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(6) {
 				this->arquivo_obj,
-					this->marcador, this->translation, this->rotation, this->scale
+					this->marcador, this->translation, this->rotation, this->scale, this->LIGHTING
 			});
 			this->dataGridView2->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->dataGridView2->Location = System::Drawing::Point(0, 69);
 			this->dataGridView2->Name = L"dataGridView2";
-			this->dataGridView2->Size = System::Drawing::Size(415, 350);
+			this->dataGridView2->Size = System::Drawing::Size(418, 350);
 			this->dataGridView2->TabIndex = 2;
 			this->dataGridView2->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &main::dataGridView2_CellContentClick);
 			// 
@@ -390,6 +432,11 @@ namespace Project1 {
 			// 
 			this->scale->HeaderText = L"Scale";
 			this->scale->Name = L"scale";
+			// 
+			// LIGHTING
+			// 
+			this->LIGHTING->HeaderText = L"LIGHTING";
+			this->LIGHTING->Name = L"LIGHTING";
 			// 
 			// main
 			// 
@@ -454,12 +501,120 @@ private: System::Void dataGridView2_CellContentClick(System::Object^  sender, Sy
 private: System::Void novoMarcador_Click(System::Object^  sender, System::EventArgs^  e) {
 	System::String^ arquivo = Microsoft::VisualBasic::Interaction::InputBox(L"Nome do arquivo. Com .patt no final", L"Novo Marcador", L"file.patt", 500, 100);
 
-	System::String^ comando = "mk_patt -cpara=\"Data/camera_para.dat\" --output " + arquivo;
-	//MessageBox::Show(comando);
-	IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
-	char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
-	system(nativeString);
+	System::String^ comando = "  --output " + arquivo+" -cpara=\"Data/camera_para.dat\"";
 	
+
+	//MessageBox::Show(comando);
+	//IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
+	//char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
+	//system(nativeString);
+
+	ProcessStartInfo ^startInfo = gcnew ProcessStartInfo;
+
+	startInfo->FileName = "mk_patt.exe";
+	startInfo->CreateNoWindow = true; // start with no window
+	startInfo->Arguments = comando;
+
+	
+	System::Diagnostics::Process^ myProcess;
+	myProcess = System::Diagnostics::Process::Start(startInfo);
+		
+	myProcess->WaitForExit();
+
+	System::String^ destino = Environment::GetEnvironmentVariable("public")+"/ObjAR/Data/" + arquivo;
+
+	IntPtr ptrToNativeStrings = Marshal::StringToHGlobalAnsi(destino);
+	char* nativeStrings = static_cast<char*>(ptrToNativeStrings.ToPointer());
+
+	LPCWSTR destLPC = (LPCWSTR)nativeStrings;
+	
+	if (FileExists(nativeStrings)){
+		MessageBox::Show("Salvo com sucesso!");
+		dataGridView1->Rows->Add( "MARKER"+dataGridView1->RowCount+1 ,arquivo, "SINGLE", "80.0");
+		refreshGrid1();
+	}
+}
+
+	private: void refreshGrid1(){
+		marcador->Items->Clear();
+		for (int i = 0; i < dataGridView1->RowCount; i++){
+			dataGridView1->Rows[i]->Cells[0]->Value = "MARKER" + (i + 1);
+			marcador->Items->Add("MARKER" + (i + 1));
+		}
+	}
+private: System::Void excluirMarcador_Click(System::Object^  sender, System::EventArgs^  e) {
+	String^ arquivo = dataGridView1->SelectedRows[0]->Cells[1]->Value->ToString();
+	System::String^ destino = Environment::GetEnvironmentVariable("public") + "/objAR/Data/" + arquivo;
+		IntPtr ptrToNativeStrings = Marshal::StringToHGlobalAnsi(destino);
+	char* nativeStrings = static_cast<char*>(ptrToNativeStrings.ToPointer());
+	if (FileExists(nativeStrings)){
+		remove(nativeStrings);	
+	}
+	dataGridView1->Rows->Remove(dataGridView1->SelectedRows[0]);
+	refreshGrid1();
+}
+	private: System::Void novoObj_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (dataGridView1->RowCount > 0){
+
+
+			if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				System::IO::StreamReader^ sr = gcnew
+					System::IO::StreamReader(openFileDialog1->FileName);
+				//if (sr->GetType)
+				System::String^ name = Path::GetFileNameWithoutExtension(openFileDialog1->FileName);
+				System::String^ destino = Environment::GetEnvironmentVariable("public") + "/ObjAR/OSG/" + name + ".osg";
+				System::String^ comando = " \"" + openFileDialog1->FileName + "\" \"" + destino + "\"";
+				IntPtr ptrToNativeString = Marshal::StringToHGlobalAnsi(comando);
+				char* nativeString = static_cast<char*>(ptrToNativeString.ToPointer());
+				//system(nativeString);		
+				//MessageBox::Show(comando);
+
+				ProcessStartInfo ^startInfo = gcnew ProcessStartInfo;
+				startInfo->FileName = "osgconv.exe";
+				startInfo->CreateNoWindow = false; // start with no window
+				startInfo->Arguments = comando;
+
+
+
+				System::Diagnostics::Process^ myProcess;
+				myProcess = System::Diagnostics::Process::Start(startInfo);
+
+				//myProcess->
+
+				myProcess->WaitForExit();
+
+				IntPtr ptrToNativeStrings = Marshal::StringToHGlobalAnsi(destino);
+				char* nativeStrings = static_cast<char*>(ptrToNativeStrings.ToPointer());
+
+				LPCWSTR destLPC = (LPCWSTR)nativeStrings;
+
+
+
+				if (FileExists(nativeStrings)){
+					dataGridView2->Rows->Add(name + ".osg", "MARKER1", "0.0 0.0 0.0", "0.0 0.0 0.0 0.0", "2.0 2.0 2.0", "LIGHTING 1");
+					MessageBox::Show("Salvo em " + destino);
+				}
+				else{
+
+					MessageBox::Show("Aconteceu algum erro durante a conversão do arquivo, tente outro formato!");
+				}
+
+
+
+				sr->Close();
+			}
+		}
+		else{
+			MessageBox::Show("Você precisa cadastrar os marcadores primeiro!");
+		}
+	}
+private: System::Void aplicarToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	aplicar();
+}
+protected: void aplicar(){
+	System::String^ markers = Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/markers.dat";
+	System::String^ objects = Environment::GetEnvironmentVariable("public") + "/ObjAR/Data/objects.dat";
 }
 };
 
